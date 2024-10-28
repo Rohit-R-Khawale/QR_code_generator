@@ -35,9 +35,18 @@ inquirer
 
     // this function puts the text or url you provided in the qr-code (This process of putting text into img is called as pipeing(maybe: search on google) )
     qr_svg.pipe(fs.createWriteStream(`./qrcodes/${url.substring(12,17)}.png`));
-  })
 
-//   the phase of error catching happens here...
+    // Here we will keep the record of all the url's of which we created qr-codes in the "message.txt" file where each url will be in comma separated format
+    fs.appendFile("message.txt",", "+url,(err)=>{
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log("File saved successfully");
+        }
+    })
+  })
+   //the phase of error catching happens here...
   .catch((error) => {
     if (error.isTtyError) {
          // if while taing the input from the user an conerting it into qr code any error occurs the this will throw that error for us to view
@@ -47,4 +56,3 @@ inquirer
       console.log("Thank You!"); 
     }
   });
-  
